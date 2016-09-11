@@ -1,11 +1,8 @@
 package com.kush;
-
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import org.jsoup.*;
+import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.Queue;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,16 +14,19 @@ public class Main {
         processPage("http://www.purdue.edu");
     }
 
-    public static void processPage(String URL) throws IOException{
-        //check if the given URL is already in the hashtable
+    private static void processPage(String URL) throws IOException{
+        //check if the given URL is already in the HashTable
 
-        //store the URL to hashtable to avoid parsing again
+        //store the URL to HashTable to avoid parsing again
 
         //get useful information
-        Document doc = Jsoup.connect("http://www.purdue.edu/").get();
+        Document doc = Jsoup.connect(URL).get();
 
-        String title = doc.title();
+        //List links approach
+
+
         /*
+        String title = doc.title();
         Element content = doc.getElementById("content");
         //get all links and recursively call the processPage method
         Elements links = content.getElementsByTag("a");
@@ -35,6 +35,9 @@ public class Main {
             String linkText = link.text();
         }
         */
+
+        //Recursive approach
+
         /*
         Elements questions = doc.select("a[href]");
 
@@ -43,11 +46,15 @@ public class Main {
                 processPage(link.attr("abs:href"));
         }
         */
+        Hashtable words = new Hashtable();
+        Queue<String> queue = new LinkedList<>();
         Elements links = doc.select("a[href]");
         print("\nLinks: (%d)", links.size());
         for (Element link : links) {
-            print(" * a: <%s>  (%s)", link.attr("abs:href"), trim(link.text(), 35));
+            queue.add(link.attr("abs:href"));
+            print(" * a: <%s>  (%s)", link.attr("abs:href"), trim(link.text(), 100));
         }
+
     }
     private static void print(String msg, Object... args) {
         System.out.println(String.format(msg, args));
