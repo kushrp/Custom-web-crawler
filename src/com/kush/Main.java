@@ -13,14 +13,14 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         Main m = new Main();
-        /*
+
         System.out.println("First BFS: ");
         m.processPageBFS("http://www.purdue.edu");
         System.out.println("NOW DFS without recursion: ");
         m.processPageDFSnoRecurse("http://www.purdue.edu");
         System.out.println("NOW DFS with recursion: ");
         m.processPageDFS("http://www.purdue.edu");
-        System.out.println("250 links BFS Starting with cs.purdue.edu: ");*/
+        System.out.println("250 links BFS Starting with cs.purdue.edu: ");
         m.parsePageBFS("http://www.cs.purdue.edu");
 
     }
